@@ -1,0 +1,30 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        top, bottom, left, right = True, False, False, False
+        ans = []
+        reverse = 1
+        while matrix:
+            if top:
+                ans += [x for x in matrix.pop(0)]
+                top = False
+                right = True
+            elif right:
+                for row in matrix:
+                    ans.append(row.pop())
+                right = False
+                bottom = True
+            elif bottom:
+                ans += [x for x in matrix.pop()[::-1]]
+                bottom = False
+                left = True
+            elif left:
+                for row in reversed(matrix):
+                    ans.append(row.pop(0))
+                left = False
+                top = True
+            temp = []
+            for row in matrix:
+                if row:
+                    temp.append(row)
+            matrix = temp
+        return ans
